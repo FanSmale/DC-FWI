@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-@Time: 2024/7/5
-
-@Author : Zeng Zifei
-"""
-
 ################################################
 ########            导入库               ########
 ################################################
@@ -328,6 +321,7 @@ font3 = {'family': 'Times New Roman',
          }
 
 SaveTrainValidResults_2(train_loss=train_loss_list, val_loss=val_loss_list, l1=train_loss_l1_list, logcosh=train_loss_logcosh_list, ssim=train_loss_ssim_list, SavePath=train_result_dir, ModelName=ModelName, font2=font2, font3=font3)
+
 
 
 
