@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-@Time: 2024/6/28
-
-@author: Zeng Zifei
-"""
 import torch
 import torch.nn as nn
 import numpy as np
@@ -53,7 +47,6 @@ def model_reader(net, device, save_src='./models/SEGSimulation/model_name.pkl'):
     return net
 
 
-# 轮廓
 def extract_contours(para_image):
     '''
     Use Canny to extract contour features
@@ -63,7 +56,6 @@ def extract_contours(para_image):
     '''
 
     image = para_image
-    # cv2.normalize将图片的值放缩到 0-255 之间
     norm_image = cv2.normalize(image, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
     norm_image_to_255 = norm_image * 255
     norm_image_to_255 = norm_image_to_255.astype(np.uint8)
@@ -78,7 +70,7 @@ def PSNR(target, prediction):
 
 
 def SSIM_skimage(target, prediction):
-    return ssim(target, prediction, data_range=target.max() - target.min(), multichannel=True)  #True（默认值），则假定图像为多通道图像，SSIM将在每个通道上计算并返回通道之间的平均值。
+    return ssim(target, prediction, data_range=target.max() - target.min(), multichannel=True)  
 
 
 def MSE(prediction, target):
@@ -160,14 +152,10 @@ def LPIPS(GT, P):
 
 def SaveTrainResults(train_loss, mae, logcosh, SavePath, ModelName, font2, font3):
     fig, ax = plt.subplots()
-    # plt.plot是Matplotlib库中用于绘制折线图的主要函数之一。它的作用是将一组数据点连接起来
-    # 第一个参数为x轴上的数据点。label参数可以为线条指定标签，用于创建图例
     plt.plot(train_loss[1:], label='Training')
     ax.set_xlabel('Number of epochs', font2)
     ax.set_ylabel('Loss', font2)
     ax.set_title('Training Loss', font3)
-    # 给x轴设置最大值的上限变量范围
-    # 改变的是背景灰色虚线部分
     ax.set_xlim([1, 10])
     ax.set_xticks([i for i in range(0, Epochs+1, 20)])
     ax.set_xticklabels((str(i) for i in range(0, Epochs+1, 20)))
@@ -184,14 +172,10 @@ def SaveTrainResults(train_loss, mae, logcosh, SavePath, ModelName, font2, font3
 
 def SaveTrainResults_2(train_loss, l1, logcosh, ssim, SavePath, ModelName, font2, font3):
     fig, ax = plt.subplots()
-    # plt.plot是Matplotlib库中用于绘制折线图的主要函数之一。它的作用是将一组数据点连接起来
-    # 第一个参数为x轴上的数据点。label参数可以为线条指定标签，用于创建图例
     plt.plot(train_loss[1:], label='Training')
     ax.set_xlabel('Number of epochs', font2)
     ax.set_ylabel('Loss', font2)
     ax.set_title('Training Loss', font3)
-    # 给x轴设置最大值的上限变量范围
-    # 改变的是背景灰色虚线部分
     ax.set_xlim([1, 10])
     ax.set_xticks([i for i in range(0, Epochs+1, 20)])
     ax.set_xticklabels((str(i) for i in range(0, Epochs+1, 20)))
@@ -206,7 +190,6 @@ def SaveTrainResults_2(train_loss, l1, logcosh, ssim, SavePath, ModelName, font2
     plt.close()
 
 
-# 训练时加入验证集
 def SaveTrainValidResults(train_loss, val_loss, l1, logcosh, SavePath, ModelName, font2, font3):
     fig, ax = plt.subplots()
     plt.plot(train_loss[1:], label='Training')
@@ -214,8 +197,6 @@ def SaveTrainValidResults(train_loss, val_loss, l1, logcosh, SavePath, ModelName
     ax.set_xlabel('Number of epochs', font2)
     ax.set_ylabel('Loss', font2)
     ax.set_title('Training and validation Loss', font3)
-    # 给x轴设置最大值的上限变量范围
-    # 改变的是背景灰色虚线部分
     ax.set_xlim([1, 10])
     ax.set_xticks([i for i in range(0, Epochs + 1, 20)])
     ax.set_xticklabels((str(i) for i in range(0, Epochs + 1, 20)))
@@ -237,8 +218,6 @@ def SaveTrainValidResults_2(train_loss, val_loss, l1, logcosh, ssim, SavePath, M
     ax.set_xlabel('Number of epochs', font2)
     ax.set_ylabel('Loss', font2)
     ax.set_title('Training and validation Loss', font3)
-    # 给x轴设置最大值的上限变量范围
-    # 改变的是背景灰色虚线部分
     ax.set_xlim([1, 10])
     ax.set_xticks([i for i in range(0, Epochs + 1, 20)])
     ax.set_xticklabels((str(i) for i in range(0, Epochs + 1, 20)))
@@ -252,7 +231,6 @@ def SaveTrainValidResults_2(train_loss, val_loss, l1, logcosh, ssim, SavePath, M
     plt.show()
     plt.close()
 
-# 训练时加入验证集，只保存两个loss
 def SaveTrainValidResults2(train_loss, val_loss, SavePath, ModelName, font2, font3):
     fig, ax = plt.subplots()
     plt.plot(train_loss[1:], label='Training')
@@ -260,8 +238,6 @@ def SaveTrainValidResults2(train_loss, val_loss, SavePath, ModelName, font2, fon
     ax.set_xlabel('Number of epochs', font2)
     ax.set_ylabel('Loss', font2)
     ax.set_title('Training and validation Loss', font3)
-    # 给x轴设置最大值的上限变量范围
-    # 改变的是背景灰色虚线部分
     ax.set_xlim([1, 10])
     ax.set_xticks([i for i in range(0, Epochs + 1, 20)])
     ax.set_xticklabels((str(i) for i in range(0, Epochs + 1, 20)))
@@ -280,7 +256,7 @@ def SaveTrainValidGANResults(train_loss_g, train_loss_d, val_loss, SavePath, Mod
     fig, ax = plt.subplots()
     plt.plot(train_loss_g[1:], label='Training_g')
     plt.plot(train_loss_d[1:], label='Training_d')
-    plt.plot(val_loss[1:], label='Validation')  # 绘制 y1，并添加标签
+    plt.plot(val_loss[1:], label='Validation') 
     plt.legend()
     ax.set_xlabel('Num. of epochs', font2)
     ax.set_ylabel('Loss', font2)
@@ -335,7 +311,6 @@ def SaveTestResults(TotPSNR, TotSSIM, ToMSE, ToMAE, ToUQI, ToLPIPS, Prediction, 
     scipy.io.savemat(SavePath + TestModelName + '_TestResults.mat', data)
 
 
-# 使用RMSE
 def SaveTestResults2(TotPSNR, TotSSIM, ToRMSE, ToMAE, ToUQI, ToLPIPS, Prediction, GT, SavePath):
     data = {}
     data['TotPSNR'] = TotPSNR
@@ -367,19 +342,4 @@ def SaveTestResults2(TotPSNR, TotSSIM, ToRMSE, ToMAE, ToUQI, ToLPIPS, Prediction
     df.to_excel(file_path, index=False)
 
     scipy.io.savemat(SavePath + TestModelName + '_TestResults2.mat', data)
-
-
-def SaveLearningRate(learning_rates, SavePath, ModelName):
-    # 绘制学习率变化图
-    plt.figure(figsize=(10, 5))
-    plt.plot(range(1, Epochs + 1), learning_rates, label='Learning Rate')
-    plt.xlabel('Epoch')
-    plt.ylabel('Learning Rate')
-    plt.title('Learning Rate vs. Epochs')
-    plt.grid(True)
-    plt.legend()
-    plt.savefig(SavePath + ModelName + 'learning_rate_plot.png', transparent=True)  # 保存图像到指定目录
-    learning_rates_dict = {'learning_rates': learning_rates}
-    scipy.io.savemat(SavePath + ModelName + 'learning_rate.mat', learning_rates_dict)
-    plt.show()
 
