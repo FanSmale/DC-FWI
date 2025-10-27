@@ -1,4 +1,4 @@
-﻿@[TOC](DC-FWI)
+# DC-FWI
 The source code of paper "Enhancing structural fidelity in seismic inversion via dense connection and CBAM".
 
 Deep learning full waveform inversion (DL-FWI) demonstrates significant potential by learning the complex mapping between seismic data and velocity models.
