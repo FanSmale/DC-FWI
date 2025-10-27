@@ -1,14 +1,7 @@
-# -*- coding: utf-8 -*-
-"""
-@Time: 2024/6/28
-
-@author: Zeng Zifei
-"""
-
 ####################################################
 ####             MAIN PARAMETERS                ####
 ####################################################
-OutChannel = 1  # 输出速度模型的通道数
+OutChannel = 1  
 
 SimulateData = False# True # If False denotes training the CNN with SEGSaltData
 SEG = False
@@ -92,4 +85,5 @@ elif DataSet == "SEGSaltData/":
     TestSize = 10
     TestBatchSize = 5
     BatchSize = 10
+
     SaveEpoch = 10
