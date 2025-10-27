@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-@Time: 2024/6/28
-
-@author: Zeng Zifei
-"""
 import os
 from ParamConfig import *
 
@@ -53,4 +47,5 @@ ModelName = modelName + tagM1 + tagM2 + tagM3 + tagM4
 
 TestModelName = 'DC_Net70_2_v3_sigmoid_withoutCBAM_newloss_dynamic_loss_TrainSize24000_Epoch140_BatchSize20_LR0.0001_epoch130'
 # Load pre-trained model
+
 PreModelname = TestModelName + '.pkl'
