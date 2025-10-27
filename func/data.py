@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-@Time: 2024/6/28
-
-@author: Zeng Zifei
-"""
-
 from torch.utils.data import Dataset, DataLoader, TensorDataset
 from math import ceil
 import numpy as np
@@ -428,5 +421,6 @@ if __name__ == '__main__':
 
     dataset_dir = 'E:/pg/pg0/data/OpenWFI/FlatVel-A/'
     data_set = DatasetTestOpenFWI(dataset_dir, 10, 11,  "test")
+
 
 
