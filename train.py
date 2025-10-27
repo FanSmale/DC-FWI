@@ -93,17 +93,14 @@ class DynamicMultiLoss(nn.Module):
         return total_loss
 
 
-# 组合损失函数
 class CombinedLoss(nn.Module):
     def __init__(self, dynamic_weighting=True, fixed_weights=None):
         super(CombinedLoss, self).__init__()
         self.dynamic_weighting = dynamic_weighting
 
         if dynamic_weighting:
-            # 动态权重模式
             self.weight_module = DynamicMultiLoss(3)
         else:
-            # 固定权重模式
             if fixed_weights is None:
                 fixed_weights = [0.3, 0.7, 0.5]  # 默认值
             self.weights = fixed_weights
@@ -123,7 +120,6 @@ class CombinedLoss(nn.Module):
             current_weights = self.weight_module.get_weights()
             return total_loss, l1_loss, logcosh_loss, ssim_loss, current_weights
         else:
-            # 使用固定权重
             total_loss = self.weights[0] * l1_loss + self.weights[1] * logcosh_loss + self.weights[2] * ssim_loss
             return total_loss, l1_loss, logcosh_loss, ssim_loss, self.weights
 
@@ -140,9 +136,7 @@ if criterion.dynamic_weighting:
 ########            TRAINING            ########
 ################################################
 
-# 创建TensorBoard writer
 writer = SummaryWriter(log_dir="tensorboard_logs/fva/DC_Net70_2_v3_sigmoid_withoutCBAM_newloss_dynamic_loss")
-# 命令：tensorboard --logdir=tensorboard_logs/cva/DC_Net70_2_v3_sigmoid_newloss_dynamic_loss
 
 print()
 print('*******************************************')
@@ -251,7 +245,6 @@ train_loss_logcosh_list = 0
 train_loss_ssim_list = 0
 weight_history = []
 
-# 遍历
 for epoch in range(Epochs):
     epoch_loss = 0.0
     since = time.time()
@@ -265,13 +258,11 @@ for epoch in range(Epochs):
 
     weight_history.append(current_weights)
 
-    # 记录到TensorBoard
     writer.add_scalar('Loss/Train_Total', train_loss, epoch)
     writer.add_scalar('Loss/Train_L1', train_loss_l1, epoch)
     writer.add_scalar('Loss/Train_Logcosh', train_loss_logcosh, epoch)
     writer.add_scalar('Loss/Train_SSIM', train_loss_ssim, epoch)
     writer.add_scalar('Loss/Val_Total', val_loss, epoch)
-    # 记录权重到TensorBoard
     writer.add_scalars('Weights/L1', {'train': current_weights[0]}, epoch)
     writer.add_scalars('Weights/Logcosh', {'train': current_weights[1]}, epoch)
     writer.add_scalars('Weights/SSIM', {'train': current_weights[2]}, epoch)
@@ -321,6 +312,7 @@ font3 = {'family': 'Times New Roman',
          }
 
 SaveTrainValidResults_2(train_loss=train_loss_list, val_loss=val_loss_list, l1=train_loss_l1_list, logcosh=train_loss_logcosh_list, ssim=train_loss_ssim_list, SavePath=train_result_dir, ModelName=ModelName, font2=font2, font3=font3)
+
 
 
 
